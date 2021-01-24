@@ -1,0 +1,122 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>Font Awesome Icon Select</title>
+    <!-- META -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <link rel="icon" type="image/png" href="lagunite/lagunite_iso_mini.png">
+
+
+    <link type="text/css" rel="stylesheet" href="fontawesome/css/all.min.css" />
+    <link type="text/css" rel="stylesheet" href="lagunite/lagunite-config.css" />
+    <link type="text/css" rel="stylesheet" href="lagunite/lagunite.css" />
+    <style>
+        #icons {
+            color: var(--main_color);
+            font-size: 30px;
+        }
+
+        #icons i {
+            padding: 10px;
+            width: 30px;
+            height: 30px;
+            border: 1px solid var(--main_color);
+            border-radius: 20px;
+            margin: 5px;
+        }
+
+        #icons i:hover {
+            transform: scale(1.1);
+            color: #fff;
+            background: var(--main_color);
+            box-shadow: 0 0px 5px 1px var(--main_color);
+        }
+
+        @media only screen and (min-width : 768px) {
+            #icons {
+                font-size: 50px;
+            }
+
+            #icons i {
+                padding: 25px;
+                width: 50px;
+                height: 50px;
+                border-radius: 20px;
+                margin: 5px;
+            }
+        }
+    </style>
+
+
+
+
+</head>
+
+<body>
+    <div class="loading hidden" id="spinner">
+        <div class="sk-chase">
+            <div class="sk-chase-dot"></div>
+            <div class="sk-chase-dot"></div>
+            <div class="sk-chase-dot"></div>
+            <div class="sk-chase-dot"></div>
+        </div>
+        <h2>
+            Loading...
+        </h2>
+    </div>
+
+
+    <div class="marg">
+        <h2>Generate a HTML content with all icons</h2>
+    </div>
+    <div id="icons" class="w90 centered ">
+    </div>
+
+    <div class="col marg">
+        <h4>Made with </h4>
+        <a href="https://lagunite.com/">
+            <img src="lagunite/lagunite.png" class="centered maxvw30">
+        </a>
+    </div>
+
+    <script>
+        window.addEventListener("load", function() {
+            hidde('spinner')
+        });
+
+        fetch("brands.json")
+            .then(response => response.json())
+            .then(brands => {
+                var panel = document.getElementById("icons");
+                var started = 0;
+                var firstItem = "fa-500px";
+                var lasttItem = "fa-zhihu";
+                Array.prototype.forEach.call(document.styleSheets[0].cssRules, function(a) {
+                    var di = document.createElement("i");
+                    var icon = a.selectorText;
+                    if (icon != undefined)
+                        icon = icon.replace(".", "").replace("::before", "");
+
+                    if (started == 0)
+                        if (icon === firstItem) started = 1;
+                    if (started == 1) {
+                        di.dataset.lagunite = icon.replace(/-/g, ' ').slice(3);
+                        if (brands[icon])
+                            di.classList.add("fab");
+                        else
+                            di.classList.add("fas");
+                        di.classList.add(icon);
+                        di.onclick = function(event) {
+                            console.log(icon);
+                            navigator.clipboard.writeText(icon);
+                        }
+                        panel.appendChild(di);
+                        if (icon === lasttItem)
+                            started = 0;
+                    }
+                })
+            });
+    </script>
+</body></html>
