@@ -56,6 +56,8 @@ The custom lagunite attribute is used later to use the icon search engine.
 
 
 The project is made using Lagunite.
+
+
 [![Lagunite](https://raw.githubusercontent.com/arielivandiaz/Select-and-Search-Font-Awesome/master/lagunite/lagunite.png)](https://github.com/arielivandiaz/lagunite)
 
 
